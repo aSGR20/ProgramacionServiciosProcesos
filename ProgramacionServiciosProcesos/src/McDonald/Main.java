@@ -1,7 +1,7 @@
 package McDonald;
 
 public class Main {
-
+	
 	final static int numCocineros = 1;
 	final static int numClientes = 3;
 	
