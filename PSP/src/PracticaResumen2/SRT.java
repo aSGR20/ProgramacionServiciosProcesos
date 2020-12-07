@@ -10,6 +10,11 @@ public class SRT {
 	ArrayList<String> listaMedia;
 	ArrayList<Procesos> listaEjecuciones;
 	
+	/**
+	 * Inicializa los procesos, dos ArrayLists de procesos, <br>
+	 * una ArrayList de String y un int de tick del tiempo.
+	 * @param procesos
+	 */
 	public SRT(ArrayList<Procesos> procesos) {
 		this.process = procesos;
 		listaMedia = new ArrayList();
@@ -17,6 +22,9 @@ public class SRT {
 		reloj = 1;
 	}
 	
+	/**
+	 * Ejecuta los procesos en un orden.
+	 */
 	public void ejecucion() {
 		boolean termina = false;
 		while(termina==false) {
@@ -43,6 +51,9 @@ public class SRT {
 		}
 	}
 	
+	/**
+	 * Elimina el proceso ya finalizado.
+	 */
 	public void eliminar() {
 		for(int i = 0; i < listaEjecuciones.size(); i++) {
 			if(listaEjecuciones.get(i).getDuracion()==0) {
@@ -52,6 +63,9 @@ public class SRT {
 		}
 	}
 	
+	/**
+	 * Añade en listaEjecuciones el valor menor.
+	 */
 	private void anyadirLista() {
 		Procesos elMenor;
 		elMenor = menor();
@@ -65,6 +79,10 @@ public class SRT {
 		}
 	}
 	
+	/**
+	 * Devuelve el proceso menor.
+	 * @return
+	 */
 	public Procesos menor() {
 		int contador;
 		Procesos pequenyo = null;
@@ -99,6 +117,11 @@ public class SRT {
 		return pequenyo;
 	}
 	
+	/**
+	 * Guarda las variables del proceso pasado y devuelve el proceso.
+	 * @param numProceso
+	 * @return
+	 */
 	public Procesos crearProcesos(int numProceso) {
 		String nombre = process.get(numProceso).getNombre();
 		int inicio = process.get(numProceso).getInicio();
@@ -107,6 +130,9 @@ public class SRT {
 		return proceso;
 	}
 	
+	/**
+	 * Calcula la media y la devuelve por consola.
+	 */
 	public void media() {
 		System.out.println("Media de los procesos:");
 		Collections.sort(listaMedia);

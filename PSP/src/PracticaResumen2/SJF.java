@@ -9,6 +9,11 @@ public class SJF {
 	ArrayList<String> listaMedia;
 	int reloj;
 	
+	/**
+	 * Inicializa los procesos, una ArrayList de procesos, <br>
+	 * una ArrayList de String y el tick del tiempo.
+	 * @param procesos
+	 */
 	public SJF(ArrayList<Procesos> procesos) {
 		this.process = procesos;
 		listaMedia = new ArrayList();
@@ -16,6 +21,9 @@ public class SJF {
 		reloj = 1;
 	}
 	
+	/**
+	 * Ejecuta los procesos en el orden del SJF
+	 */
 	public void ejecucion() {
 		boolean termina = false;
 		boolean cambia = false;
@@ -68,6 +76,9 @@ public class SJF {
 		}
 	}
 	
+	/**
+	 * Elimina el proceso ya finalizado.
+	 */
 	public void eliminar() {
 		for(int i = 0; i < listaEjecuciones.size(); i++) {
 			if(listaEjecuciones.get(i).getDuracion()==0) {
@@ -77,12 +88,18 @@ public class SJF {
 		}
 	}
 	
+	/**
+	 * Si la lista de procesos está vacia añade el proceso mas pequeño.
+	 */
 	public void addMenor() {
 		if(!process.isEmpty()) {
 			addLista();
 		}
 	}
 	
+	/**
+	 * Añade en la lista el proceso mas pequeño.
+	 */
 	public void addLista() {
 		Procesos elMenor;
 		elMenor = menor();
@@ -96,6 +113,10 @@ public class SJF {
 		}
 	}
 	
+	/**
+	 * Devuelve el proceso mas pequeño.
+	 * @return
+	 */
 	public Procesos menor() {
 		int contador;
 		Procesos pequenyo = null;
@@ -130,6 +151,11 @@ public class SJF {
 		return pequenyo;
 	}
 	
+	/**
+	 * Guarda las variables del proceso pasado y devuelve el proceso.
+	 * @param numProceso
+	 * @return
+	 */
 	public Procesos crearProcesos(int numProceso) {
 		String nombre = process.get(numProceso).getNombre();
 		int inicio = process.get(numProceso).getInicio();
@@ -138,6 +164,9 @@ public class SJF {
 		return proceso;
 	}
 	
+	/**
+	 * Calcula la media de la ejecución de los procesos y la devuelve por consola.
+	 */
 	public void media() {
 		System.out.println("Media de los procesos:");
 		Collections.sort(listaMedia);

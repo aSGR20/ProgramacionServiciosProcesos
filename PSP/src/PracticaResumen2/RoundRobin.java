@@ -9,12 +9,21 @@ public class RoundRobin {
 	ArrayList<String> listaMedia;
 	int quantum;
 
+	/**
+	 * Inicializa los procesos, una ArrayList de procesos, <br>
+	 * una ArrayList de String y guarda el quantum en una variable.
+	 * @param procesos
+	 * @param quantum
+	 */
 	public RoundRobin(ArrayList<Procesos> procesos, int quantum) {
 		this.process = procesos;
 		this.quantum = quantum;
 		listaMedia = new ArrayList();
 	}
 	
+	/**
+	 * Ejecutar los procesos en un orden del quantum preguntado anteriormente.
+	 */
 	public void ejecucion() {
 		Procesos proceso;
 		int reloj = 1;
@@ -59,6 +68,9 @@ public class RoundRobin {
 		}
 	}
 	
+	/**
+	 * Elimina el proceso ya terminado.
+	 */
 	public void eliminar() {
 		try {
 			if(!process.isEmpty()) {
@@ -74,6 +86,12 @@ public class RoundRobin {
 		}
 	}
 	
+	/**
+	 * Guardo en variables el nombre, tick de inicio y la duracion <br>
+	 * del proceso. Devuelvo el proceso pasado.
+	 * @param numProceso
+	 * @return
+	 */
 	public Procesos crearProcesos(int numProceso) {
 		String nombre = process.get(numProceso).getNombre();
 		int inicio = process.get(numProceso).getInicio();
@@ -82,6 +100,9 @@ public class RoundRobin {
 		return proceso;
 	}
 	
+	/**
+	 * Calculo la media de tiempo de los procesos.
+	 */
 	public void media() {
 		System.out.println("Media de los procesos:");
 		Collections.sort(listaMedia);

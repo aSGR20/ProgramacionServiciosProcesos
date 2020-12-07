@@ -8,11 +8,19 @@ public class Fifo {
 	ArrayList<Procesos> process;
 	ArrayList<String> listaMedia;
 
+	/**
+	 * Inicializa los procesos, una ArrayList de procesos <br>
+	 * y una ArrayList de String.
+	 * @param procesos
+	 */
 	public Fifo(ArrayList<Procesos> procesos) {
 		this.process = procesos;
 		listaMedia = new ArrayList();
 	}
 	
+	/**
+	 * Ejecuta los procesos en un orden y en un timing.
+	 */
 	public void ejecucion() {
 		int reloj = 1;
 		while (!(process.isEmpty())) {
@@ -47,6 +55,9 @@ public class Fifo {
 		}
 	}
 	
+	/**
+	 * Calcula la media de los procesos y te lo muestras por consola.
+	 */
 	public void media() {
 		System.out.println("Media de los procesos:");
 		Collections.sort(listaMedia);
