@@ -30,39 +30,40 @@ public class Algoritmos {
 	}
 	
 	public void menu() {
-		//try {
-		System.out.println("¿Qué desea realizar?");
-		System.out.println("1.- Fifo");
-		System.out.println("2.- Round Robin");
-		System.out.println("3.- SRT");
-		System.out.println("4.- SJF");
-		System.out.println("0.- Salir");
-		opcion = teclado.nextInt();
-		switch(opcion) {
-		case 1:
-			Fifo fifo = new Fifo(listaProcesos());
-			fifo.ejecucion();
-			break;
-		case 2:
-			System.out.println("¿Cuánto quantum quieres hacer Round Robin?");
-			quantum = teclado.nextInt();
-			roundRobin(quantum);
-			RoundRobin rr = new RoundRobin(listaProcesos(), quantum);
-			rr.ejecucion();
-			break;
-		case 3:
-			break;
-		case 4:
-			break;
-		case 0:
-			break;
-		}
-		/*} catch (InputMismatchException e) {
-			System.out.println("No puedes escribir letras ._.");
-		}*/
+		try {
+			System.out.println("¿Qué desea realizar?");
+			System.out.println("1.- Fifo");
+			System.out.println("2.- Round Robin");
+			System.out.println("3.- SRT");
+			System.out.println("4.- SJF");
+			System.out.println("0.- Salir");
+			opcion = teclado.nextInt();
+			switch(opcion) {
+			case 1:
+				Fifo fifo = new Fifo(listaProcesos());
+				fifo.ejecucion();
+				break;
+			case 2:
+				System.out.println("¿Cuánto quantum quieres hacer Round Robin?");
+				quantum = teclado.nextInt();
+				RoundRobin rr = new RoundRobin(listaProcesos(), quantum);
+				rr.ejecucion();
+				break;
+			case 3:
+				SRT srt = new SRT(listaProcesos());
+				srt.ejecucion();
+				break;
+			case 4:
+				SJF sjf = new SJF(listaProcesos());
+				sjf.ejecucion();
+				break;
+			case 0:
+				break;
+			}
+			} catch (InputMismatchException e) {
+				System.out.println("No puedes escribir letras ._.");
+			}
 	}
 	
-	public void roundRobin(int quantum) {
-		System.out.println("hola");
-	}
+	
 }
