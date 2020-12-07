@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Practica1 {
@@ -13,37 +14,61 @@ public class Practica1 {
 	public static ProcessBuilder processBuilder = new ProcessBuilder();
 	
 	public static void main(String[] args) {
-		//System.out.println(OS); //Muestra el SO que tienes
-		System.out.println("Eliga la opción que desee realizar:");
-		System.out.println("\t1.- Crear un directorio");
-		System.out.println("\t2.- Crear un fichero");
-		System.out.println("\t3.- Listar todas las interfaces de red");
-		System.out.println("\t4.- Listar la IP de la interfaz que escribas");
-		System.out.println("\t5.- Listar la MAC de la interfaz que escribas");
-		System.out.println("\t6.- Comprueba que tengas conexión a internet");
-		System.out.println("\t7.- Salir");
-		System.out.print("Opción: ");
-		int opcion = sc.nextInt();
-		switch(opcion) {
-		case 1:
-			crearDirectorio();
-			break;
-		case 2:
-			crearFichero();
-			break;
-		case 3:
-			listarInterfaces();
-			break;
-		case 4:
-			listarIP();
-			break;
-		case 5:
-			listarMAC();
-			break;
-			case 6:
-			testInternet();
-			break;
-		}
+		boolean repetir;
+		do {
+			try {
+				System.out.println("Eliga la opción que desee realizar:");
+				System.out.println("\t1.- Crear un directorio");
+				System.out.println("\t2.- Crear un fichero");
+				System.out.println("\t3.- Listar todas las interfaces de red");
+				System.out.println("\t4.- Listar la IP de la interfaz que escribas");
+				System.out.println("\t5.- Listar la MAC de la interfaz que escribas");
+				System.out.println("\t6.- Comprueba que tengas conexión a internet");
+				System.out.println("\t7.- Salir");
+				System.out.print("Opción: ");
+				int opcion = sc.nextInt();
+				switch(opcion) {
+				case 1:
+					crearDirectorio();
+					break;
+				case 2:
+					crearFichero();
+					break;
+				case 3:
+					listarInterfaces();
+					break;
+				case 4:
+					listarIP();
+					break;
+				case 5:
+					listarMAC();
+					break;
+				case 6:
+					testInternet();
+					break;
+				case 0:
+					repetir = true;
+					break;
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("No puedes escribir letras ._.");
+			}
+			System.out.println("");
+			System.out.println("¿Desea realizar otra cosa?");
+			System.out.println("Escriba \"si\" o \"no\"");
+			String eleccion = sc.next();
+			if(eleccion.toLowerCase().equals("si")) {
+				repetir = true;
+				System.out.println();
+			}else if(eleccion.toLowerCase().equals("no")) {
+				repetir = false;
+				System.out.println();
+			}else {
+				System.out.println("Como no has escrito \"si\" o \"no\", me lo tomo como un sí :)");
+				System.out.println();
+				repetir = true;
+			}
+		}while(repetir);
 	}
 	
 	/**
