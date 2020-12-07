@@ -13,6 +13,10 @@ public class Practica1 {
 	public static Scanner sc = new Scanner(System.in);
 	public static ProcessBuilder processBuilder = new ProcessBuilder();
 	
+	/*
+	 * Mensaje del programador: programa probado en Windows 10
+	 * y en Ubuntu 18
+	 */
 	public static void main(String[] args) {
 		boolean repetir;
 		do {
