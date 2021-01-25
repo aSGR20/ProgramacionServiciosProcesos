@@ -1,5 +1,3 @@
-
-
 package Practica_1;
 
 import java.io.BufferedReader;
@@ -7,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Practica1 {
@@ -15,36 +14,47 @@ public class Practica1 {
 	public static ProcessBuilder processBuilder = new ProcessBuilder();
 	
 	public static void main(String[] args) {
-		//System.out.println(OS); //Muestra el SO que tienes
-		System.out.println("Eliga la opción que desee realizar:");
-		System.out.println("\t1.- Crear un directorio");
-		System.out.println("\t2.- Crear un fichero");
-		System.out.println("\t3.- Listar todas las interfaces de red");
-		System.out.println("\t4.- Listar la IP de la interfaz que escribas");
-		System.out.println("\t5.- Listar la MAC de la interfaz que escribas");
-		System.out.println("\t6.- Comprueba que tengas conexión a internet");
-		System.out.println("\t7.- Salir");
-		System.out.print("Opción: ");
-		int opcion = sc.nextInt();
-		switch(opcion) {
-		case 1:
-			crearDirectorio();
-			break;
-		case 2:
-			crearFichero();
-			break;
-		case 3:
-			listarInterfaces();
-			break;
-		case 4:
-			listarIP();
-			break;
-		case 5:
-			listarMAC();
-			break;
-			case 6:
-			testInternet();
-			break;
+		boolean seguir = true;
+		try {
+			do {
+				//System.out.println(OS); //Muestra el SO que tienes
+				System.out.println("Eliga la opción que desee realizar:");
+				System.out.println("\t1.- Crear un directorio");
+				System.out.println("\t2.- Crear un fichero");
+				System.out.println("\t3.- Listar todas las interfaces de red");
+				System.out.println("\t4.- Listar la IP de la interfaz que escribas");
+				System.out.println("\t5.- Listar la MAC de la interfaz que escribas");
+				System.out.println("\t6.- Comprueba que tengas conexión a internet");
+				System.out.println("\t7.- Salir");
+				System.out.print("Opción: ");
+				int opcion = sc.nextInt();
+				switch(opcion) {
+				case 1:
+					crearDirectorio();
+					break;
+				case 2:
+					crearFichero();
+					break;
+				case 3:
+					listarInterfaces();
+					break;
+				case 4:
+					listarIP();
+					break;
+				case 5:
+					listarMAC();
+					break;
+				case 6:
+					testInternet();
+					break;
+				case 7:
+					seguir = false;
+					break;
+				}
+		}while(seguir);
+		} catch(Exception ime) {
+			System.out.println("¿Vas de gracioso? Te pido un número, no carácteres");
+			System.out.println("\n");
 		}
 	}
 	
@@ -197,7 +207,7 @@ public class Practica1 {
 	 */
 	public static void listarIP() {
 		//Obtiene nombre del adaptador
-		System.out.print("IP del adaptador: ");
+		System.out.print("Nombre del adaptador: ");
 		String adapterName = sc.next();
 		
 		//Dependiendo del OS carga un comando u otro
@@ -213,7 +223,7 @@ public class Practica1 {
 		        //Mira línea por línea en búsqueda de "Ethernet adapter " + (nombre de la variable introducido)
 		        while ((line = buffer.readLine()) != null) {
 		            line = line.trim();
-		            if (line.equals("Ethernet adapter " + adapterName + ':')) {
+		            if (line.equals("Ethernet adapter " + adapterName + ':') || line.equals("Adaptador de Ethernet " + adapterName + ':')) {
 		                foundAdapter = true;
 		                break;
 		            }
@@ -232,8 +242,9 @@ public class Practica1 {
 
 		            //Extrae la IP
 		            if (line.startsWith("IP Address.") ||
-		                line.startsWith("IPv4 Address.")) {
-
+		                line.startsWith("IPv4 Address.") ||
+		                line.startsWith("Dirección IP.") ||
+		                line.startsWith("Dirección IPv4.")) {
 		                int colonIndex;
 		                if ((colonIndex = line.indexOf(':')) != 1) {
 		                    ips.add(line.substring(colonIndex + 2));
@@ -277,7 +288,7 @@ public class Practica1 {
 	 */
 	public static void listarMAC() {
 		//Obtiene nombre del adaptador
-		System.out.print("Diga el adaptardor para obtener la MAC: ");
+		System.out.print("Adaptador para obtener la MAC: ");
 		String adapterName = sc.next();
 		
 		//Dependiendo del OS carga un comando u otro
@@ -293,7 +304,7 @@ public class Practica1 {
 		        //Mira línea por línea en búsqueda de "Ethernet adapter " + (nombre de la variable introducido)
 		        while ((line = buffer.readLine()) != null) {
 		            line = line.trim();
-		            if (line.equals("Ethernet adapter " + adapterName + ':')) {
+		            if (line.equals("Ethernet adapter " + adapterName + ':') || line.equals("Adaptador de Ethernet " + adapterName + ':')) {
 		                foundAdapter = true;
 		                break;
 		            }
@@ -311,8 +322,7 @@ public class Practica1 {
 		            line = line.trim();
 
 		            //Extrae la MAC
-		            if (line.startsWith("Physical Address")) {
-
+		            if (line.startsWith("Physical Address") || line.startsWith("Dirección física")) {
 		                int colonIndex;
 		                if ((colonIndex = line.indexOf(':')) != 1) {
 		                    ips.add(line.substring(colonIndex + 2));
@@ -351,7 +361,7 @@ public class Practica1 {
 
 	
 	/**
-	 * Muestra por consola sin el dispostivo tiene internet
+	 * Muestra por consola si el dispostivo tiene internet
 	 * mediante el uso de comandos
 	 */
 	public static void testInternet() {
@@ -369,7 +379,9 @@ public class Practica1 {
 
 	        while ((line = buffer.readLine()) != null) {
 	            line = line.trim();
-	            if (line.equals("Packets: Sent = 1, Received = 1, Lost = 0 (0% loss),") || line.equals("1 packets transmitted, 1 received, 0% packet loss")) {
+	            if (line.equals("Packets: Sent = 1, Received = 1, Lost = 0 (0% loss),") ||
+	            	line.equals("1 packets transmitted, 1 received, 0% packet loss") ||
+	            	line.equals("Paquetes: enviados = 1, recibidos = 1, perdidos = 0")) {
 	            	tieneInternet = true;
 	            	break;
 	            }
